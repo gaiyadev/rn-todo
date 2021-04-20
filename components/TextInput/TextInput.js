@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, TextInput, Button, StyleSheet } from "react-native";
 
-const textInput = () => {
+const textInput = (props) => {
+  const [task, setTask] = useState("");
+
+  const onChangeTextHandler = (newTask) => {
+    setTask(newTask);
+  };
+
+  const AddTaskHandler = () => {
+    props.onAdd(task);
+    setTask("");
+  };
+
   return (
     <View>
       <TextInput
+        onChangeText={onChangeTextHandler}
         style={styles.input}
+        value={task}
         placeholderTextColor="red"
-        autoFocus="true"
         placeholder="Add Task"
       />
-      <Button style={styles.addBtn} title="Add Task" />
+      <Button onPress={AddTaskHandler} style={styles.addBtn} title="Add Task" />
     </View>
   );
 };
@@ -24,7 +36,7 @@ const styles = StyleSheet.create({
   },
   addBtn: {
     color: "#841584",
-    margin: 5,
+    margin: 8,
     padding: 14,
   },
 });
